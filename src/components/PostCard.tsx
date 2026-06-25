@@ -6,6 +6,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
     <article className="group">
       <Link
         href={`/blog/${post.slug}`}
+        target="_blank"
         className="block p-4 -mx-4 rounded-xl hover:bg-card/60 transition-all duration-200"
       >
         <div className="flex flex-col gap-2">

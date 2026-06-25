@@ -3,12 +3,14 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { PostMeta } from "@/lib/mdx";
 import PostCard from "@/components/PostCard";
+import { useScrollReveal } from "@/lib/use-scroll-reveal";
 
 export default function HomeClient({ posts }: { posts: PostMeta[] }) {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { ref: articleSectionRef, revealed } = useScrollReveal(0.1);
 
   const filteredPosts = useMemo(() => {
     if (!query.trim()) return [];
@@ -96,6 +98,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
                 <a
                   key={post.slug}
                   href={`/blog/${post.slug}`}
+                  target="_blank"
                   className="flex items-start gap-3 px-4 py-3 hover:bg-fg/5 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
                 >
                   <svg className="w-4 h-4 text-muted/40 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -130,7 +133,10 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
 
       {/* 文章列表 */}
       <section ref={resultsRef} className="scroll-mt-16 pt-16">
-        <div className="mx-auto max-w-3xl px-6 pb-10 rounded-none md:my-4">
+        <div
+          ref={articleSectionRef as React.RefObject<HTMLDivElement>}
+          className={`mx-auto max-w-3xl px-6 pb-10 rounded-none md:my-4 scroll-reveal ${revealed ? "revealed" : ""}`}
+        >
           <h2 className="flex items-center font-bold border-b border-border/60 pt-4 pb-1 mb-3" style={{ fontSize: '30px' }}>
             {showResults && query.trim() ? `搜索结果 (${filteredPosts.length})` : "最新文章"}
           </h2>

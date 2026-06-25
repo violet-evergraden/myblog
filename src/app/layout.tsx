@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import PageTransition from "@/components/PageTransition";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -37,7 +38,9 @@ export default function RootLayout({
           <div id="bg-overlay" />
           <Header />
           <main className="relative z-10 flex-1 w-full max-w-3xl mx-auto px-6 pt-[56px]">
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </main>
           <Footer />
         </Providers>
