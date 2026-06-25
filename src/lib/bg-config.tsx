@@ -13,7 +13,7 @@ const STORAGE_KEY = "blog-bg-config";
 const defaultConfig: BgConfig = {
   type: "image",
   value: "/backgrounds/default.png",
-  opacity: 70,
+  opacity: 100,
 };
 
 interface BgContextType {

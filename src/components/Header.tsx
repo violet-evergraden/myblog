@@ -310,7 +310,7 @@ export default function Header() {
                       {/* 恢复默认 */}
                       <div className="mx-3 my-1 h-px bg-border/30" />
                       <button
-                        onClick={() => setConfig({ type: "image", value: "/backgrounds/default.png", opacity: 70 })}
+                        onClick={() => setConfig({ type: "image", value: "/backgrounds/default.png", opacity: 100 })}
                         className="w-full px-3 py-2 text-[11px] text-muted/60 hover:text-muted transition-colors text-left"
                       >
                         恢复默认

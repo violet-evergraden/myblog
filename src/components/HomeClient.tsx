@@ -130,7 +130,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
 
       {/* 文章列表 */}
       <section ref={resultsRef} className="scroll-mt-16 pt-16">
-        <div className="mx-auto max-w-3xl px-6 pb-10 bg-bg/40 backdrop-blur-sm rounded-none md:rounded-2xl md:my-4">
+        <div className="mx-auto max-w-3xl px-6 pb-10 rounded-none md:my-4">
           <h2 className="flex items-center font-bold border-b border-border/60 pt-4 pb-1 mb-3" style={{ fontSize: '30px' }}>
             {showResults && query.trim() ? `搜索结果 (${filteredPosts.length})` : "最新文章"}
           </h2>
