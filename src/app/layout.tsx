@@ -33,8 +33,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-bg text-fg transition-colors duration-300">
         <Providers>
+          {/* 夜间模式暗色遮罩 */}
+          <div id="bg-overlay" />
           <Header />
-          <main className="flex-1 w-full max-w-3xl mx-auto px-6 pt-[56px]">
+          <main className="relative z-10 flex-1 w-full max-w-3xl mx-auto px-6 pt-[56px]">
             {children}
           </main>
           <Footer />

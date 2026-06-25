@@ -17,10 +17,10 @@
 
 .dark {
   --bg: #0c0c18;
-  --fg: #e8e8f0;
-  --muted: #9ca3af;
-  --border: #1f2033;
-  --card: #13132a;
+  --fg: #ffffff;
+  --muted: #e0e7ff;
+  --border: #4b5563;
+  --card: #1a1a30;
   --accent: #f472b6;
   --accent-hover: #ec4899;
 }
@@ -40,6 +40,20 @@
 body {
   background: var(--bg);
   color: var(--fg);
+}
+
+/* 夜间模式：背景图上加暗色遮罩，确保文字可读 */
+.dark #bg-overlay {
+  opacity: 1;
+}
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 /* ===== 代码块 ===== */
