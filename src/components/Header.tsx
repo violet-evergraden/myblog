@@ -66,12 +66,12 @@ export default function Header() {
       hidden ? "-translate-y-full" : "translate-y-0"
     }`}>
       <div className="mx-auto max-w-3xl px-6 h-14 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold tracking-tight text-accent hover:text-accent-hover transition-colors">
+        <Link href="/" className="text-lg font-bold tracking-tight text-fg hover:text-accent transition-colors">
           violet的小站
         </Link>
         <nav className="flex items-center gap-0.5">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="px-3 py-1.5 text-sm text-accent hover:text-accent-hover rounded-lg transition-colors duration-200">
+            <Link key={link.href} href={link.href} className="px-3 py-1.5 text-sm text-fg/80 hover:text-accent rounded-lg transition-colors duration-200">
               {link.label}
             </Link>
           ))}
