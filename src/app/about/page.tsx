@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "关于 - violet的小站",
+  title: "关于 - Konataの小站",
   description: "关于我",
 };
 

@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import ReadingProgress from "./ReadingProgress";
-import GlowEffect from "./GlowEffect";
 
 export default function ClientEffects({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -10,7 +9,6 @@ export default function ClientEffects({ children }: { children: React.ReactNode 
 
   return (
     <>
-      <GlowEffect />
       {isArticle && <ReadingProgress />}
       {children}
     </>

@@ -29,7 +29,6 @@ export default function ArticleToc() {
     });
     setHeadings(items);
 
-    // 监听滚动高亮
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -53,17 +52,20 @@ export default function ArticleToc() {
   };
 
   return (
-    <nav className="hidden lg:block fixed right-8 top-28 w-56 z-50">
-      <div className="pl-4 border-l border-border/50">
-        <p className="text-[11px] font-semibold text-muted/50 tracking-wider mb-3">目录</p>
+    <nav className="w-full">
+      <p className="font-bold text-fg mb-5" style={{ fontSize: "25px" }}>目录</p>
+      <div className="flex flex-col gap-1.5 border-l-2 border-accent/30 pl-4">
         {headings.map((h) => (
           <button
             key={h.id}
             onClick={() => scrollTo(h.id)}
-            className={`block w-full text-left py-1 text-[12px] leading-tight transition-colors duration-200 hover:text-accent ${
-              activeId === h.id ? "text-accent font-medium" : "text-muted/60"
+            className={`block w-full text-left py-2 leading-snug transition-colors duration-200 hover:text-accent ${
+              activeId === h.id ? "text-accent font-semibold" : "text-fg/60"
             }`}
-            style={{ paddingLeft: `${(h.level - 1) * 12}px` }}
+            style={{
+              paddingLeft: `${(h.level - 1) * 14}px`,
+              fontSize: "25px",
+            }}
           >
             {h.text}
           </button>

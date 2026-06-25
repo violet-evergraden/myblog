@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export function useScrollReveal(threshold = 0.1) {
-  const ref = useRef<HTMLElement>(null);
+export function useScrollReveal(threshold?: number) {
+  const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
@@ -17,8 +17,9 @@ export function useScrollReveal(threshold = 0.1) {
           observer.unobserve(el);
         }
       },
-      { threshold }
+      { threshold: threshold ?? 0.1 }
     );
+
     observer.observe(el);
     return () => observer.disconnect();
   }, [threshold]);

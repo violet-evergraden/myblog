@@ -58,8 +58,8 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
     <div className="flex flex-col">
       {/* 搜索区 - 真正居中 */}
       <section className="h-screen flex flex-col items-center justify-center gap-5">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-fg">
-          violet的小站
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight artistic-title" style={{ fontFamily: "var(--font-zcool), var(--font-dancing), cursive" }}>
+          Konataの小站
         </h1>
         <p className="text-muted text-center max-w-md text-sm leading-relaxed">
           记录技术、生活与思考的地方
@@ -67,7 +67,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
 
         {/* 搜索框 - 宽度限制 + 搜索 */}
         <div className="w-full max-w-lg mx-auto relative">
-          <div className="flex items-center w-full rounded-full border border-border/50 bg-bg/30 backdrop-blur-md px-4 py-3 hover:border-border/80 focus-within:border-accent/40 focus-within:bg-bg/50 transition-all duration-300">
+          <div className="flex items-center w-full rounded-full border border-border/50 bg-white/30 backdrop-blur-md px-4 py-3 hover:border-border/80 focus-within:border-accent/40 focus-within:bg-white/50 transition-all duration-300">
             <svg className="w-4 h-4 text-muted/50 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
@@ -78,7 +78,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
               onChange={(e) => handleSearch(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="搜索文章名称或关键词"
-              className="flex-1 ml-2.5 bg-transparent text-fg placeholder:text-muted/40 text-sm outline-none"
+              className="flex-1 ml-2.5 bg-transparent text-white placeholder:text-white/50 text-sm outline-none"
             />
             {query ? (
               <button onClick={clearSearch} className="text-muted/30 hover:text-muted transition-colors">
@@ -93,7 +93,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
 
           {/* 输入时的实时下拉预览 */}
           {showResults && previewResults.length > 0 && (
-            <div className="absolute top-full mt-2 w-full bg-bg/90 border border-border/50 rounded-2xl shadow-lg backdrop-blur-xl z-30 overflow-hidden">
+            <div className="absolute top-full mt-2 w-full bg-white/90 border border-border/50 rounded-2xl shadow-lg backdrop-blur-xl z-30 overflow-hidden">
               {previewResults.map((post) => (
                 <a
                   key={post.slug}
@@ -135,22 +135,24 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
       <section ref={resultsRef} className="scroll-mt-16 pt-16">
         <div
           ref={articleSectionRef as React.RefObject<HTMLDivElement>}
-          className={`mx-auto max-w-3xl px-6 pb-10 rounded-none md:my-4 scroll-reveal ${revealed ? "revealed" : ""}`}
+          className={`mx-auto max-w-4xl px-6 pb-10 md:my-4 scroll-reveal ${revealed ? "revealed" : ""}`}
         >
-          <h2 className="flex items-center font-bold border-b border-border/60 pt-4 pb-1 mb-3" style={{ fontSize: '30px' }}>
-            {showResults && query.trim() ? `搜索结果 (${filteredPosts.length})` : "最新文章"}
-          </h2>
-          {(showResults ? filteredPosts : posts).length > 0 ? (
-            <div className="flex flex-col divide-y divide-border/40">
-              {(showResults && query.trim() ? filteredPosts : posts).map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-muted text-sm py-8 text-center">
-              {query ? "没有找到相关文章，换个关键词试试？" : "暂无文章。"}
-            </p>
-          )}
+          <div className="glass-panel p-6">
+            <h2 className="flex items-center font-bold border-b border-border/60 pt-4 pb-1 mb-3" style={{ fontSize: '30px' }}>
+              {showResults && query.trim() ? `搜索结果 (${filteredPosts.length})` : "最新文章"}
+            </h2>
+            {(showResults ? filteredPosts : posts).length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                {(showResults && query.trim() ? filteredPosts : posts).map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted text-sm py-8 text-center">
+                {query ? "没有找到相关文章，换个关键词试试？" : "暂无文章。"}
+              </p>
+            )}
+          </div>
         </div>
       </section>
     </div>

@@ -27,7 +27,7 @@ export default function PostCard({ post }: { post: PostMeta }) {
       <Link
         href={`/blog/${post.slug}`}
         target="_blank"
-        className="block p-4 -mx-4 rounded-xl hover:bg-card/60 transition-all duration-200"
+        className="block p-4 rounded-xl border border-border/40 bg-card/40 hover:bg-card/80 hover:border-accent/30 transition-all duration-200"
       >
         <div className="flex flex-col gap-2">
           <time className="text-xs font-mono text-muted tracking-wide">

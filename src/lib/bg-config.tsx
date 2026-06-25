@@ -4,8 +4,9 @@ import { createContext, useContext, useEffect, useState, useCallback } from "rea
 
 export interface BgConfig {
   type: "none" | "image" | "gradient";
-  value: string; // 图片路径或渐变 CSS
-  opacity: number; // 0-100
+  value: string;
+  mobileValue?: string;
+  opacity: number;
 }
 
 const STORAGE_KEY = "blog-bg-config";
@@ -13,7 +14,8 @@ const STORAGE_KEY = "blog-bg-config";
 const defaultConfig: BgConfig = {
   type: "image",
   value: "/backgrounds/default.png",
-  opacity: 100,
+  mobileValue: "/backgrounds/default_phone.jpg",
+  opacity: 70,
 };
 
 interface BgContextType {
@@ -28,31 +30,6 @@ const BgContext = createContext<BgContextType>({
 
 export function useBg() {
   return useContext(BgContext);
-}
-
-/** 压缩本地图片为 base64（限制宽度 1920px，质量 0.7） */
-export function compressImage(file: File, maxWidth = 1920, quality = 0.7): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      let w = img.width;
-      let h = img.height;
-      if (w > maxWidth) {
-        h = Math.round((h * maxWidth) / w);
-        w = maxWidth;
-      }
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL("image/jpeg", quality);
-      URL.revokeObjectURL(img.src);
-      resolve(dataUrl);
-    };
-    img.onerror = () => reject(new Error("图片加载失败"));
-    img.src = URL.createObjectURL(file);
-  });
 }
 
 export function BgProvider({ children }: { children: React.ReactNode }) {
@@ -84,9 +61,21 @@ export function BgProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 function BackgroundLayer({ config }: { config: BgConfig }) {
   if (config.type === "none") return null;
 
+  const isMobile = useIsMobile();
   const opacity = config.opacity / 100;
 
   const bgStyle: React.CSSProperties = {
@@ -99,11 +88,16 @@ function BackgroundLayer({ config }: { config: BgConfig }) {
   };
 
   if (config.type === "image") {
+    // 优先使用手机端壁纸
+    const bgUrl = isMobile && config.mobileValue
+      ? config.mobileValue
+      : config.value;
+
     return (
       <div
         style={{
           ...bgStyle,
-          backgroundImage: `url(${config.value})`,
+          backgroundImage: `url(${bgUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

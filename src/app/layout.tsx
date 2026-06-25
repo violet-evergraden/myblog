@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Dancing_Script, ZCOOL_XiaoWei } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import PageTransition from "@/components/PageTransition";
@@ -16,8 +16,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const zcoolXiaoWei = ZCOOL_XiaoWei({
+  variable: "--font-zcool",
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
-  title: "violet的小站",
+  title: "Konataの小站",
   description: "一个使用 Next.js 和 Tailwind CSS 构建的个人博客",
 };
 
@@ -29,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${zcoolXiaoWei.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-bg text-fg transition-colors duration-300">
@@ -37,7 +48,7 @@ export default function RootLayout({
           {/* 夜间模式暗色遮罩 */}
           <div id="bg-overlay" />
           <Header />
-          <main className="relative z-10 flex-1 w-full max-w-3xl mx-auto px-6 pt-[56px]">
+          <main className="relative z-10 flex-1 w-full px-6 pt-[56px]">
             <PageTransition>
               {children}
             </PageTransition>

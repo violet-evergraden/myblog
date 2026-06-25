@@ -4,25 +4,25 @@
 /* Tailwind v4: class-based dark mode for next-themes */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ===== 主题变量 ===== */
+/* ===== 主题变量（醒目深色字体 + 亮色底） ===== */
 :root {
   --bg: #ffffff;
-  --fg: #1a1a2e;
-  --muted: #4b5563;
-  --border: #e5e7eb;
-  --card: #f9fafb;
-  --accent: #e74c6f;
-  --accent-hover: #d63384;
+  --fg: #1a1040;
+  --muted: #3b2080;
+  --border: rgba(99, 60, 200, 0.2);
+  --card: rgba(255, 255, 255, 0.75);
+  --accent: #d91a60;
+  --accent-hover: #e82e76;
 }
 
 .dark {
-  --bg: #0c0c18;
-  --fg: #ffffff;
-  --muted: #e0e7ff;
-  --border: #4b5563;
-  --card: #1a1a30;
+  --bg: #0f0a2a;
+  --fg: #e0e7ff;
+  --muted: #a5b4fc;
+  --border: rgba(139, 92, 246, 0.25);
+  --card: rgba(15, 10, 40, 0.65);
   --accent: #f472b6;
-  --accent-hover: #ec4899;
+  --accent-hover: #fb7185;
 }
 
 @theme inline {
@@ -42,10 +42,7 @@ body {
   color: var(--fg);
 }
 
-/* 夜间模式：背景图上加暗色遮罩，确保文字可读 */
-.dark #bg-overlay {
-  opacity: 1;
-}
+/* 背景图遮罩 */
 #bg-overlay {
   position: fixed;
   inset: 0;
@@ -54,6 +51,24 @@ body {
   background: rgba(0, 0, 0, 0.55);
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+.dark #bg-overlay {
+  opacity: 1;
+}
+
+/* 玻璃面板：毛玻璃背景 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(99, 60, 200, 0.15);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+.dark .glass-panel {
+  background: rgba(15, 10, 40, 0.65);
+  border-color: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== 代码块 ===== */
@@ -100,8 +115,8 @@ pre code {
 
 /* 行内代码 */
 :not(pre) > code {
-  background: #fce7f3;
-  color: #be185d;
+  background: rgba(217, 26, 96, 0.1);
+  color: #9d174d;
   padding: 0.15rem 0.45rem;
   border-radius: 0.375rem;
   font-size: 0.85em;
@@ -109,8 +124,67 @@ pre code {
 }
 
 .dark :not(pre) > code {
-  background: #1c2333;
+  background: rgba(244, 114, 182, 0.12);
   color: #f472b6;
+}
+
+/* ===== 文章内容区 prose 样式（亮色底+醒目深色字） ===== */
+.prose {
+  color: #1a1040;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #0f0530;
+}
+.prose a {
+  color: #d91a60;
+}
+.prose a:hover {
+  color: #e82e76;
+}
+.prose strong {
+  color: #0f0530;
+}
+.prose blockquote {
+  border-left-color: #d91a60;
+  color: #3b2080;
+  background: rgba(99, 60, 200, 0.05);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+.prose hr {
+  border-color: rgba(99, 60, 200, 0.2);
+}
+.prose ul > li::marker,
+.prose ol > li::marker {
+  color: #d91a60;
+}
+.prose thead {
+  color: #0f0530;
+  border-bottom-color: rgba(99, 60, 200, 0.2);
+}
+.prose tbody tr {
+  border-bottom-color: rgba(99, 60, 200, 0.08);
+}
+.prose tbody td, .prose tbody th {
+  border-color: rgba(99, 60, 200, 0.08);
+}
+
+.dark .prose {
+  color: #c7d2fe;
+}
+.dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4 {
+  color: #ffffff;
+}
+.dark .prose a {
+  color: #f9a8d4;
+}
+
+/* 文字阴影：在背景图上增强可读性 */
+.text-shadow {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* 自定义滚动条 */
@@ -154,6 +228,23 @@ input[type="range"]::-moz-range-thumb {
 }
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out both;
+}
+
+/* ===== 艺术字体标题 ===== */
+.artistic-title {
+  font-family: var(--font-zcool), var(--font-dancing), cursive;
+  background: linear-gradient(270deg, #f97316, #ef4444, #ec4899, #f97316);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: artShift 5s ease infinite;
+}
+
+@keyframes artShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ===== 滚动进入动画 ===== */
