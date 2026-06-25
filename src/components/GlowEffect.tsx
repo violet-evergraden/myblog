@@ -10,7 +10,7 @@ export default function GlowEffect() {
     if (!el) return;
 
     const onMove = (e: MouseEvent) => {
-      el.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(231, 76, 111, 0.06), transparent 40%)`;
+      el.style.background = `radial-gradient(500px circle at ${e.clientX}px ${e.clientY}px, rgba(231, 76, 111, 0.15), transparent 45%)`;
     };
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
@@ -19,7 +19,7 @@ export default function GlowEffect() {
   return (
     <div
       ref={ref}
-      className="fixed inset-0 z-0 pointer-events-none transition-background duration-300"
+      className="fixed inset-0 z-[1] pointer-events-none"
     />
   );
 }

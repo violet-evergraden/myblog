@@ -45,7 +45,7 @@ export default function ArticleToc() {
     return () => observer.disconnect();
   }, []);
 
-  if (headings.length < 2) return null;
+  if (headings.length < 1) return null;
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -53,7 +53,7 @@ export default function ArticleToc() {
   };
 
   return (
-    <nav className="hidden xl:block fixed right-8 top-28 w-56 z-50">
+    <nav className="hidden lg:block fixed right-8 top-28 w-56 z-50">
       <div className="pl-4 border-l border-border/50">
         <p className="text-[11px] font-semibold text-muted/50 tracking-wider mb-3">目录</p>
         {headings.map((h) => (
