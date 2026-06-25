@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/mdx";
 import MarkdownBody from "@/components/MarkdownBody";
+import ArticleToc from "@/components/ArticleToc";
+import ViewCounter from "@/components/ViewCounter";
 import type { Metadata } from "next";
 
 interface Props {
@@ -32,11 +34,17 @@ export default async function BlogPost({ params }: Props) {
   }
 
   return (
-    <article className="flex flex-col gap-8 max-w-none">
+    <>
+      <ArticleToc />
+      <article className="flex flex-col gap-8 max-w-none">
       <header className="flex flex-col gap-3 border-b border-border pb-6">
-        <time className="text-xs font-mono text-muted tracking-wide">
-          {post.date}
-        </time>
+        <div className="flex items-center gap-3">
+          <time className="text-xs font-mono text-muted tracking-wide">
+            {post.date}
+          </time>
+          <span className="text-border">·</span>
+          <ViewCounter slug={post.slug} />
+        </div>
         <h1 className="text-3xl font-bold tracking-tight text-fg">
           {post.title}
         </h1>
@@ -60,5 +68,6 @@ export default async function BlogPost({ params }: Props) {
       </header>
       <MarkdownBody content={post.content} />
     </article>
+    </>
   );
 }

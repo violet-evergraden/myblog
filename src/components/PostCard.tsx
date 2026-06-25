@@ -1,9 +1,29 @@
+"use client";
+
+import { useRef, useCallback } from "react";
 import Link from "next/link";
 import { PostMeta } from "@/lib/mdx";
 
 export default function PostCard({ post }: { post: PostMeta }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.01)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
+  }, []);
+
   return (
-    <article className="group">
+    <article className="group" ref={cardRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ transition: "transform 0.15s ease-out", willChange: "transform" }}>
       <Link
         href={`/blog/${post.slug}`}
         target="_blank"

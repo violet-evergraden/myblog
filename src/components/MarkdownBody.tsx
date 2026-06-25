@@ -1,15 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 
 export default function MarkdownBody({ content }: { content: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  const addCopyButtons = useCallback(() => {
+    if (!ref.current) return;
+    ref.current.querySelectorAll("pre").forEach((pre) => {
+      // 避免重复添加
+      if (pre.parentElement?.classList.contains("relative")) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "relative group";
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className =
+        "absolute top-2 right-2 px-2 py-1 rounded-md text-[11px] font-medium " +
+        "bg-white/10 text-white/50 hover:bg-white/20 hover:text-white/80 " +
+        "opacity-0 group-hover:opacity-100 transition-all duration-200 " +
+        "backdrop-blur-sm border border-white/10 cursor-pointer";
+      btn.textContent = "复制";
+      btn.addEventListener("click", () => {
+        const code = pre.querySelector("code");
+        const text = code?.textContent || pre.textContent || "";
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = "已复制 ✓";
+          btn.classList.add("!text-green-400", "!bg-green-500/10");
+          setTimeout(() => {
+            btn.textContent = "复制";
+            btn.classList.remove("!text-green-400", "!bg-green-500/10");
+          }, 2000);
+        });
+      });
+      wrapper.appendChild(btn);
+    });
+  }, []);
+
   useEffect(() => {
     if (!ref.current) return;
-    // 按需加载 highlight.js 语言并高亮
     Promise.all([
       import("highlight.js/lib/core"),
       import("highlight.js/lib/languages/xml"),
@@ -35,8 +68,10 @@ export default function MarkdownBody({ content }: { content: string }) {
       ref.current!.querySelectorAll("pre code").forEach((el) => {
         hljs.default.highlightElement(el as HTMLElement);
       });
+
+      addCopyButtons();
     });
-  }, [content]);
+  }, [content, addCopyButtons]);
 
   return (
     <div
