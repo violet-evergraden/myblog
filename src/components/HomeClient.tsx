@@ -57,7 +57,7 @@ export default function HomeClient({ posts }: { posts: PostMeta[] }) {
       {/* 搜索区 - 真正居中 */}
       <section className="h-screen flex flex-col items-center justify-center gap-5">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-fg">
-          我的博客
+          violet的小站
         </h1>
         <p className="text-muted text-center max-w-md text-sm leading-relaxed">
           记录技术、生活与思考的地方

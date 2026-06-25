@@ -3,7 +3,7 @@ import PostCard from "@/components/PostCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "博客 - 我的博客",
+  title: "博客 - violet的小站",
   description: "所有博客文章列表",
 };
 

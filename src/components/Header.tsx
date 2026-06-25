@@ -67,7 +67,7 @@ export default function Header() {
     }`}>
       <div className="mx-auto max-w-3xl px-6 h-14 flex items-center justify-between">
         <Link href="/" className="text-lg font-bold tracking-tight text-accent hover:text-accent-hover transition-colors">
-          我的博客
+          violet的小站
         </Link>
         <nav className="flex items-center gap-0.5">
           {navLinks.map((link) => (

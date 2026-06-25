@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "我的博客",
+  title: "violet的小站",
   description: "一个使用 Next.js 和 Tailwind CSS 构建的个人博客",
 };
 
