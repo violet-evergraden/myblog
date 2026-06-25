@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
   return {
-    title: `${post.title} - 我的博客`,
+    title: `${post.title} - VIOLET`,    
     description: post.description,
   };
 }
